@@ -2,6 +2,7 @@ package me.fython.schoolexam.ui
 
 import android.Manifest
 import android.app.ProgressDialog
+import android.app.WallpaperManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -106,6 +107,39 @@ class ViewerActivity : AppCompatActivity() {
                         1)
             } else {
                 save()
+            }
+            return true
+        }
+        if (item?.itemId == R.id.action_set) {
+            async(UI) {
+                val fileName = Uri.parse(data.urls.full).lastPathSegment + ".jpg"
+                val file = File(externalCacheDir, fileName)
+                val dialog = ProgressDialog.show(this@ViewerActivity, "Saving...",
+                        null, true, false)
+                try {
+                    async(CommonPool) {
+                        OkHttpUtils.newCall(Request.Builder().url(data.urls.full).build())
+                                .execute()
+                                .let {
+                                    if (it.isSuccessful && it.code() == 200) {
+                                        file.createNewFile()
+                                        file.outputStream().run {
+                                            write(it.body()!!.bytes())
+                                            flush()
+                                            close()
+                                        }
+                                    }
+                                }
+                    }.await()
+                    val uri = FileProvider.getUriForFile(
+                            this@ViewerActivity,
+                            "me.fython.schoolexam.fileprovider", file)
+                    startActivity(WallpaperManager.getInstance(this@ViewerActivity)
+                            .getCropAndSetWallpaperIntent(uri))
+                } catch (e : Exception) {
+                    e.printStackTrace()
+                }
+                dialog.dismiss()
             }
             return true
         }

@@ -4,5 +4,7 @@
 
     <string name="action_refresh">Refresh</string>
     <string name="action_save">Save</string>
+    <string name="action_set">Set as wallpaper</string>
+    <string name="action_favourites">Favourites</string>
 
 </resources>

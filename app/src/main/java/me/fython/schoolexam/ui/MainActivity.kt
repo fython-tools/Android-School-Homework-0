@@ -1,5 +1,6 @@
 package me.fython.schoolexam.ui
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.widget.SwipeRefreshLayout
@@ -14,6 +15,7 @@ import kotlinx.coroutines.experimental.android.UI
 import kotlinx.coroutines.experimental.async
 import me.fython.schoolexam.R
 import me.fython.schoolexam.api.UnsplashApi
+import me.fython.schoolexam.dao.FavouritesDatabase
 import me.fython.schoolexam.util.OkHttpUtils
 import me.fython.schoolexam.util.onLoadMore
 
@@ -54,12 +56,29 @@ class MainActivity : AppCompatActivity() {
             refresh()
         } else {
             currentPage = savedInstanceState[STATE_CURRENT_PAGE] as Int
+            adapter.data.clear()
+            adapter.data.addAll(savedInstanceState.getParcelableArrayList(STATE_LIST))
+            adapter.notifyDataSetChanged()
+            if (adapter.data.isEmpty()) {
+                refresh()
+            }
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putInt(STATE_CURRENT_PAGE, currentPage)
+        outState.putParcelableArrayList(STATE_LIST, ArrayList(adapter.data))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        adapter.notifyDataSetChanged()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        FavouritesDatabase.getInstance(this).save()
     }
 
     override fun onDestroy() {
@@ -97,6 +116,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean = when (item?.itemId) {
+        R.id.action_favourites -> {
+            startActivity(Intent(this, FavouritesActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+            true
+        }
         R.id.action_refresh -> {
             refresh()
             true
@@ -107,6 +131,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         private const val STATE_CURRENT_PAGE = "current_page"
+        private const val STATE_LIST = "list"
 
     }
 

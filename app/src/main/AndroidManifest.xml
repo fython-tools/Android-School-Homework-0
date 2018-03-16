@@ -26,6 +26,13 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".ui.FavouritesActivity"
+            android:label="@string/action_favourites">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+            </intent-filter>
+        </activity>
+
         <provider
             android:authorities="me.fython.schoolexam.fileprovider"
             android:name="android.support.v4.content.FileProvider"

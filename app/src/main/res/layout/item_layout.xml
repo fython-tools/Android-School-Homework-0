@@ -13,39 +13,45 @@
         android:id="@android:id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"/>
-
-    <Button
-        android:id="@+id/like_button"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        tools:text="6262"
-        android:paddingStart="16dp"
-        android:paddingEnd="8dp"
-        android:drawableStart="@drawable/ic_thumb_up_black_16dp"
-        android:textColor="@android:color/black"
-        android:foreground="?android:selectableItemBackground"
-        android:background="@drawable/round_corner_button_light"
-        android:elevation="6dp"
-        android:alpha="0.7"
-        android:stateListAnimator="@animator/like_button_state"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:outlineProvider="background"/>
+        android:scaleType="centerCrop"
+        tools:src="@android:color/darker_gray"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom">
+        android:orientation="horizontal"
+        android:layout_margin="8dp"
+        android:layout_gravity="bottom|start">
 
-        <TextView
-            android:id="@android:id/title"
+        <Button
+            android:id="@+id/like_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title"
-            tools:text="Title"/>
+            android:layout_height="32dp"
+            tools:text="6262"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:drawableStart="@drawable/ic_thumb_up_black_16dp"
+            android:textColor="@android:color/black"
+            android:foreground="?android:selectableItemBackground"
+            android:background="@drawable/round_corner_button_light"
+            android:elevation="6dp"
+            android:alpha="0.7"
+            android:stateListAnimator="@animator/like_button_state"
+            android:layout_margin="8dp"
+            android:outlineProvider="background"/>
+
+        <ImageButton
+            android:id="@+id/star_button"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/ic_star_black_16dp"
+            android:foreground="?android:selectableItemBackground"
+            android:background="@drawable/round_corner_button_light"
+            android:elevation="6dp"
+            android:alpha="0.7"
+            android:stateListAnimator="@animator/like_button_state"
+            android:layout_margin="8dp"
+            android:outlineProvider="background"/>
 
     </LinearLayout>
 

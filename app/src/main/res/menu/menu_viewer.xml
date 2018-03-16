@@ -8,4 +8,10 @@
         android:icon="@drawable/ic_file_download_white_24dp"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_set"
+        android:title="@string/action_set"
+        android:icon="@drawable/ic_wallpaper_white_24dp"
+        app:showAsAction="ifRoom"/>
+
 </menu>

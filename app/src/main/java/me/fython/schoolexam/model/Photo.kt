@@ -84,4 +84,8 @@ data class Photo(
         }
     }
 
+    override fun equals(other: Any?): Boolean {
+        return if (other !is Photo) false else other.id == id
+    }
+
 }
