@@ -70,7 +70,11 @@ class ThumbsListAdapter(
 
         fun onBind(data: Photo) {
             this.data = data
-            image.setBackgroundColor(Color.parseColor(data.color))
+            image.setBackgroundColor(try {
+                Color.parseColor(data.color)
+            } catch (e : Exception) {
+                Color.TRANSPARENT
+            })
             like.text = data.likes.toString()
             star.setImageResource(
                     if (data in db) R.drawable.ic_star_black_16dp
